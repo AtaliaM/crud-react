@@ -21,7 +21,8 @@ export default class CreateCard extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        document.form.reset();
+        const form = document.querySelector(".form");
+        form.reset();
         const warning = document.querySelector("h5");
         warning.style.display = "none";
         const imageVerifier = new RegExp("(http(s?):)|([/|.|w|s])*.(?:jpg|gif|png)");
@@ -45,7 +46,7 @@ export default class CreateCard extends React.Component {
     render() {
         return (
             <div>
-                <form name="form" onSubmit={this.handleSubmit}>
+                <form name="form" className="form" onSubmit={this.handleSubmit}>
                     <label style={{ margin: "0 5px" }}>
                         Name:
               <input style={{ margin: "0 5px" }} type="text" name="name" onChange={this.handleNameChange} />
