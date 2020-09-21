@@ -13,12 +13,14 @@ class CreateCard extends React.Component {
         console.log(this.state.id);
     }
 
-    //the avatar is deleted, but it's seen only after refreshing the page 
     deleteCard = async() => {
+        const currentCard = document.getElementById(`${this.state.id}`);
+        currentCard.remove();
         // const id = this.state.id;
         console.log(this.state.id);
         const response = await mock.delete(`/people/${this.state.id}`);
         console.log(response);
+
     }
 
     render() {

@@ -3,7 +3,7 @@ import DeleteCard from './DeleteCard';
 
 const CreateCard = (props) => {
     return (
-        <div style={{display: "inline-block", border: "1px solid black", margin:"10px", padding:"5px"}}>
+        <div id= {props.id}style={{display: "inline-block", border: "1px solid black", margin:"10px", padding:"5px"}}>
             <h3>{props.name}</h3>
             <img src={props.src} alt={props.alt}></img>
             <h3>{`I am ${props.job}`}</h3>
