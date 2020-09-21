@@ -10,11 +10,12 @@ class App extends React.Component {
 
   async componentDidMount() {
     const response = await mock.get('/people');
+    console.log(response);
     this.setState({ data: (response).data });
     console.log(this.state.data);
 
     this.setState({ nextAvailableId: Number(response.data[response.data.length - 1].id) + 1 });
-    console.log(`next available id: ${this.state.nextAvailableId}`);
+    // console.log(`next available id: ${this.state.nextAvailableId}`);
   }
 
   deleteCard = async (currentIdToDelete) => {
@@ -29,15 +30,21 @@ class App extends React.Component {
     this.setState({ data: updatedData });
   }
 
-  createCard = async (name) => {
-    const response = await mock.post(`/people/`);
-    response.data.name = name;
-    console.log(response.data);
-   
+  createCard = async (name,image,age,job) => {
+    let newCard = {}; //the user has to enter name and image. age and job are not mendatory. 
+    age !== "" && job !== "" ? newCard = {name: name, avatar: image, age: age, job: job} : 
+    age !== "" ? newCard = {name: name, avatar: image, age: age} :
+    job !== "" ? newCard = newCard = {name: name, avatar: image, job: job} :
+    newCard = {name: name, avatar: image};
+    console.log(newCard);
+
+    // const newCard = {name: name, avatar: image, };
+    const response = await mock.post(`/people/`, newCard);
+    // console.log(response.data);
     const updatedData = this.state.data;
     updatedData.push(response.data);
     this.setState({data:updatedData});
-    console.log(this.state.data);
+    // console.log(this.state.data);
   }
 
 

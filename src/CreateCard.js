@@ -1,14 +1,22 @@
 import React from 'react';
-import mock from './api/mock';
-
 
 export default class CreateCard extends React.Component {
     state = {
-        name: '', image: '', id: this.props.id,
+        name: '', image: '', age: '', job: '', id: this.props.id,
     }
 
-    handleChange = event => {
-        this.setState({ name: event.target.value, image: event.target.value });
+    handleImageChange = event => {
+        this.setState({image: event.target.value });
+    }
+
+    handleNameChange = event => {
+        this.setState({ name: event.target.value});
+    }
+    handleJobChange = event => {
+        this.setState({ job: event.target.value});
+    }
+    handleAgeChange = event => {
+        this.setState({ age: event.target.value});
     }
 
     handleSubmit = async event => {
@@ -16,10 +24,15 @@ export default class CreateCard extends React.Component {
         document.form.reset();
         const warning = document.querySelector("h5");
         warning.style.display = "none";
+        const imageVerifier = new RegExp ("(http(s?):)|([/|.|w|s])*.(?:jpg|gif|png)");
+        const imageVerifierRes = imageVerifier.test(this.state.image);
+        console.log(imageVerifierRes);
 
-        if (this.state.name.length >= 5) {
+        if (this.state.name.length >= 5 && imageVerifierRes) {
 
-            this.props.createCard(this.state.name);
+            this.props.createCard(this.state.name, this.state.image, this.state.age, this.state.job);
+            this.setState({job: ''});
+            this.setState({age: ''});
 
         }
         else {
@@ -33,16 +46,24 @@ export default class CreateCard extends React.Component {
         return (
             <div>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <label>
-                        Person Name:
-              <input type="text" name="name" onChange={this.handleChange} />
+                    <label style={{margin:"0 5px"}}>
+                        Name:
+              <input style={{margin:"0 5px"}} type="text" name="name" onChange={this.handleNameChange} />
                     </label>
-                    {/* <label>
+                    <label style={{margin:"0 5px"}}>
+                        Age:
+              <input style={{margin:"0 5px"}} type="text" age="age" onChange={this.handleAgeChange} />
+                    </label>
+                    <label style={{margin:"0 5px"}}>
+                        Job:
+              <input style={{margin:"0 5px"}} type="text" job="job" onChange={this.handleJobChange} />
+                    </label>
+                    <label style={{margin:"0 5px"}}>
               Image URL:
-              <input type="text" avatar="avatar" onChange={this.handleChange} />
-            </label> */}
+              <input style={{margin:"0 5px"}} type="text" image="image" onChange={this.handleImageChange} />
+            </label>
                     <button type="submit">Add Avatar</button>
-                    <h5 style={{ display: "none" }}>The name must be at least 5 characters long</h5>
+                    <h5 style={{ display: "none" }}>Please check that you enter name with minimum 5 letters and valid image url</h5>
                 </form>
             </div>
         )
