@@ -33,12 +33,14 @@ export default class CreateCard extends React.Component {
             this.props.createCard(this.state.name, this.state.image, this.state.age, this.state.job);
             this.setState({job: ''});
             this.setState({age: ''});
-
+            
+            
         }
         else {
             warning.style.display = "block";
         }
-        this.state.name = ''; //so the user won't submit the same avatar multiple times
+        this.setState({name : ''}); //so the user won't submit the same avatar multiple times
+        this.setState({image: ''});
 
     }
 
