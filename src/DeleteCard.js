@@ -1,6 +1,4 @@
 import React from 'react';
-import mock from './api/mock';
-
 
 class DeleteCard extends React.Component {
 
@@ -9,25 +7,32 @@ class DeleteCard extends React.Component {
         this.state = {id: props.id};
     }
 
-    componentDidMount() {
-        console.log(this.state.id);
-    }
+    // componentDidMount() {
+    //     console.log(this.state.id);
+    // }
 
-    deleteCard = async() => {
-        const currentCard = document.getElementById(`${this.state.id}`);
-        currentCard.remove();
-        // const id = this.state.id;
-        console.log(this.state.id);
-        const response = await mock.delete(`/people/${this.state.id}`);
-        console.log(response);
-
+    deleteCurrentCard = () => {
+        const idToDelete = this.state.id;
+        console.log(`deleting card with id: ${idToDelete}`);
+        this.props.deleteCard(idToDelete);
     }
 
     render() {
         return (
-            <button onClick={this.deleteCard}>Delete</button>
+            <button onClick={this.deleteCurrentCard}>Delete</button>
         );
     }
 }
 
 export default DeleteCard;
+
+
+   // deleteCard = async() => {
+    //     const currentCard = document.getElementById(`${this.state.id}`);
+    //     currentCard.remove();
+    //     // const id = this.state.id;
+    //     console.log(this.state.id);
+    //     const response = await mock.delete(`/people/${this.state.id}`);
+    //     console.log(response);
+
+    // }

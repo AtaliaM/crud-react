@@ -6,21 +6,44 @@ import mock from './api/mock';
 
 class App extends React.Component {
 
-  state = { data: [], nextAvailableId: ''}
+  state = { data: [], nextAvailableId: '' }
 
   async componentDidMount() {
     const response = await mock.get('/people');
-    // console.log(response);
     this.setState({ data: (response).data });
     console.log(this.state.data);
 
-    this.setState({nextAvailableId: Number(response.data[response.data.length-1].id)+1});
+    this.setState({ nextAvailableId: Number(response.data[response.data.length - 1].id) + 1 });
     console.log(`next available id: ${this.state.nextAvailableId}`);
   }
 
+  deleteCard = async (currentIdToDelete) => {
+    console.log(`in app. deleting id number: ${currentIdToDelete}`);
+    const response = await mock.delete(`/people/${currentIdToDelete}`);
+    console.log(response);
+
+    const updatedData = this.state.data.filter(obj => {
+      return obj.id !== currentIdToDelete;
+    })
+    console.log(updatedData);
+    this.setState({ data: updatedData });
+  }
+
+  createCard = async (name) => {
+    const response = await mock.post(`/people/`);
+    response.data.name = name;
+    console.log(response.data);
+   
+    const updatedData = this.state.data;
+    updatedData.push(response.data);
+    this.setState({data:updatedData});
+    console.log(this.state.data);
+  }
+
+
   generateId = () => {
     const nextAvailableId = this.state.nextAvailableId;
-    this.setState({nextAvailableId: nextAvailableId+1});
+    this.setState({ nextAvailableId: nextAvailableId + 1 });
 
     return nextAvailableId;
   }
@@ -29,8 +52,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <CreateCard onSubmit={this.generateId}/>
-        <MappingData info={this.state.data} />
+        <CreateCard onSubmit={this.generateId} createCard={this.createCard} />
+        <MappingData info={this.state.data} deleteCard={this.deleteCard} />
       </div>
     );
 

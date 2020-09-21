@@ -8,7 +8,7 @@ const DisplayCard = (props) => {
             <img src={props.src} alt={props.alt}></img>
             <h3>{`I am ${props.job}`}</h3>
             <h3>{`And I am ${Math.floor(props.age/1000)} Years old`}</h3>
-            <DeleteCard id={props.id}/>
+            <DeleteCard id={props.id} deleteCard={props.deleteCard}/>
             <button>Update</button>
         </div>
     );

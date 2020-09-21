@@ -18,21 +18,8 @@ export default class CreateCard extends React.Component {
         warning.style.display = "none";
 
         if (this.state.name.length >= 5) {
-            //   const user = {
-            //     name: this.state.name,
-            //     avatar: this.state.image,
-            //     id: this.state.id,
-            //   };
 
-            const response = await mock.post(`/people/`);
-
-            response.data.name = this.state.name;
-            console.log(response);
-            console.log(response.data);
-            Object.defineProperty(response.data, 'name', {
-                value: this.state.name,
-                writable: true
-              });
+            this.props.createCard(this.state.name);
 
         }
         else {
@@ -63,3 +50,12 @@ export default class CreateCard extends React.Component {
 }
 
 
+   // const response = await mock.post(`/people/`);
+
+            // response.data.name = this.state.name;
+            // console.log(response);
+            // console.log(response.data);
+            // Object.defineProperty(response.data, 'name', {
+            //     value: this.state.name,
+            //     writable: true
+            //   });
