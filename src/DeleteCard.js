@@ -2,7 +2,7 @@ import React from 'react';
 import mock from './api/mock';
 
 
-class CreateCard extends React.Component {
+class DeleteCard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -30,4 +30,4 @@ class CreateCard extends React.Component {
     }
 }
 
-export default CreateCard;
+export default DeleteCard;

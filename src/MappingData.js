@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateCard from './CreateCard';
+import CreateCard from './DisplayCard';
 
 const MappingData = (props) => {
     const info = props.info;

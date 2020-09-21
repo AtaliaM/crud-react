@@ -1,17 +1,65 @@
 import React from 'react';
-import DeleteCard from './DeleteCard';
+import mock from './api/mock';
 
-const CreateCard = (props) => {
-    return (
-        <div id= {props.id}style={{display: "inline-block", border: "1px solid black", margin:"10px", padding:"5px"}}>
-            <h3>{props.name}</h3>
-            <img src={props.src} alt={props.alt}></img>
-            <h3>{`I am ${props.job}`}</h3>
-            <h3>{`And I am ${Math.floor(props.age/1000)} Years old`}</h3>
-            <DeleteCard id={props.id}/>
-            <button>Update</button>
-        </div>
-    );
+
+export default class CreateCard extends React.Component {
+    state = {
+        name: '', image: '', id: this.props.id,
+    }
+
+    handleChange = event => {
+        this.setState({ name: event.target.value, image: event.target.value });
+    }
+
+    handleSubmit = async event => {
+        event.preventDefault();
+        document.form.reset();
+        const warning = document.querySelector("h5");
+        warning.style.display = "none";
+
+        if (this.state.name.length >= 5) {
+            //   const user = {
+            //     name: this.state.name,
+            //     avatar: this.state.image,
+            //     id: this.state.id,
+            //   };
+
+            const response = await mock.post(`/people/`);
+
+            response.data.name = this.state.name;
+            console.log(response);
+            console.log(response.data);
+            Object.defineProperty(response.data, 'name', {
+                value: this.state.name,
+                writable: true
+              });
+
+        }
+        else {
+            warning.style.display = "block";
+        }
+        this.state.name = ''; //so the user won't submit the same avatar multiple times
+
+    }
+
+    render() {
+        return (
+            <div>
+                <form name="form" onSubmit={this.handleSubmit}>
+                    <label>
+                        Person Name:
+              <input type="text" name="name" onChange={this.handleChange} />
+                    </label>
+                    {/* <label>
+              Image URL:
+              <input type="text" avatar="avatar" onChange={this.handleChange} />
+            </label> */}
+                    <button type="submit">Add Avatar</button>
+                    <h5 style={{ display: "none" }}>The name must be at least 5 characters long</h5>
+                </form>
+            </div>
+        )
+    }
 }
 
-export default CreateCard;
+
