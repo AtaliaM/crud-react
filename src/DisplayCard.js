@@ -1,5 +1,6 @@
 import React from 'react';
 import DeleteCard from './DeleteCard';
+import UpdateCard from './UpdateCard';
 
 const DisplayCard = (props) => {
     let age;
@@ -11,7 +12,8 @@ const DisplayCard = (props) => {
             <h3>{`I am ${props.job}`}</h3>
             <h3>{`And I am ${age} Years old`}</h3>
             <DeleteCard id={props.id} deleteCard={props.deleteCard}/>
-            <button>Update</button>
+            <UpdateCard id={props.id} name={props.name} age={props.age} job={props.job} image={props.src}
+            updateCard={props.updateCard}/>
         </div>
     );
 }

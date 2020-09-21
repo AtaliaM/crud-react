@@ -47,6 +47,27 @@ class App extends React.Component {
     // console.log(this.state.data);
   }
 
+  updateCard = async (name, image,age,job, id) => {
+    console.log("in update card");
+    let updatedCard = {name:name, avatar:image, age:age, job:job, id:id}; 
+    // console.log(updatedCard);
+
+    await mock.put(`/people/${id}`, updatedCard);
+    
+    for(let i=0; i<this.state.data.length; i++) {
+      if (this.state.data[i].id === id) {
+        console.log("this is the id!");
+        this.state.data[i] = updatedCard;
+        console.log(this.state.data[i]);
+        break;
+      }
+    }
+
+    const updatedData = this.state.data;
+    this.setState({data: updatedData});
+    
+  }
+
 
   generateId = () => {
     const nextAvailableId = this.state.nextAvailableId;
@@ -60,7 +81,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <CreateCard onSubmit={this.generateId} createCard={this.createCard} />
-        <MappingData info={this.state.data} deleteCard={this.deleteCard} />
+        <MappingData info={this.state.data} deleteCard={this.deleteCard} updateCard={this.updateCard}/>
       </div>
     );
 

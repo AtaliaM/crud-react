@@ -10,7 +10,7 @@ const MappingData = (props) => {
             return (
                 <DisplayCard key={singleData.id} alt={singleData.name} src={singleData.avatar} 
                 name={singleData.name} task={singleData.task} id={singleData.id} job={singleData.job} age={singleData.age}
-                deleteCard={props.deleteCard}
+                deleteCard={props.deleteCard} updateCard={props.updateCard}
                 />
             );
           })}
