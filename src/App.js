@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import MappingData from './MappingData';
 import CreateCard from './CreateCard';
+import Spinner from './Spinner';
 import mock from './api/mock';
 
 class App extends React.Component {
@@ -78,12 +79,21 @@ class App extends React.Component {
 
 
   render() {
-    return (
-      <div className="App">
-        <CreateCard onSubmit={this.generateId} createCard={this.createCard} />
-        <MappingData info={this.state.data} deleteCard={this.deleteCard} updateCard={this.updateCard}/>
-      </div>
-    );
+    if (this.state.data.length !== 0) {
+      return (
+        <div className="App">
+          <CreateCard onSubmit={this.generateId} createCard={this.createCard} />
+          <MappingData info={this.state.data} deleteCard={this.deleteCard} updateCard={this.updateCard}/>
+        </div>
+      );
+
+    }
+    else {
+      return (
+        <Spinner/>
+
+      );
+    }
 
   }
 }

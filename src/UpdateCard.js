@@ -8,6 +8,7 @@ class UpdateCard extends React.Component {
         previousAge: this.props.age, age: this.props.age,
         previousJob: this.props.job, job: this.props.job,
         id: this.props.id,
+        
     }
 
 
@@ -46,26 +47,30 @@ class UpdateCard extends React.Component {
         const warning = document.querySelector(`.updateWarning${this.state.id}`);
         warning.style.display = "none";
         
+        const imageVerifier = new RegExp("(http(s?):)|([/|.|w|s])*.(?:jpg|gif|png)");
+        const imageVerifierRes = imageVerifier.test(this.state.image);
+        console.log(imageVerifierRes);
         let updatedName;
         let updatedAge;
         let updatedJob;
+        let updatedImage;
         this.state.name !== "" ? updatedName = this.state.name : updatedName = this.state.previousName;
         this.state.age !== "" ? updatedAge = this.state.age : updatedAge = this.state.previousAge;
         this.state.job !== "" ? updatedJob = this.state.job : updatedJob = this.state.previousJob;
+        this.state.image !== "" && imageVerifierRes ? updatedImage = this.state.image : updatedImage = this.state.previousImage;
 
         console.log(this.state.name);
         if (this.state.name.length >= 5 || this.state.name === this.state.previousName) {
 
-            this.props.updateCard(updatedName, this.state.previousImage, updatedAge, updatedJob, this.state.id);
-            this.setState({ job: updatedJob });
-            this.setState({ age: updatedAge });
+            this.props.updateCard(updatedName, updatedImage, updatedAge, updatedJob, this.state.id);
+            this.setState({ job: updatedJob, age: updatedAge });
             form.style.display = "none";
         }
         else {
             warning.style.display = "block";
         }
-        this.setState({ name: updatedName });
-        this.setState({ image: '' });
+        this.setState({ name: updatedName, image: '' });
+        
 
     }
 
